@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY || "re_MjBfnAjq_JHiXe2HhJEbJuPSNvNqogSSY")
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const createAdminEmail = (body: any) => {
   return {
@@ -154,7 +154,20 @@ Próximos passos:
   }
 }
 
+const createWhatsAppLink = (body: any) => {
+  const phoneNumber = "5561999013354" // (61) 999013354
+  const message = encodeURIComponent(
+    `Olá! Solicitei orçamento no site da Doxa Sistemas.\n\n` +
+    `Meu nome é ${body.name}\n` +
+    `Telefone: ${body.phone}\n` +
+    `Email: ${body.email}${body.message ? `\n\nMensagem: ${body.message}` : ""}`
+  )
+  return `https://wa.me/${phoneNumber}?text=${message}`
+}
+
 const createConfirmationEmail = (body: any) => {
+  const whatsappLink = createWhatsAppLink(body)
+  
   return {
     html: `
       <!DOCTYPE html>
@@ -209,6 +222,19 @@ const createConfirmationEmail = (body: any) => {
               border-radius: 4px;
               text-align: center;
             }
+            .whatsapp-button {
+              display: inline-block;
+              background: #25D366;
+              color: white;
+              padding: 12px 24px;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+              margin: 10px 0;
+            }
+            .whatsapp-button:hover {
+              background: #20BA5A;
+            }
           </style>
         </head>
         <body>
@@ -230,13 +256,16 @@ const createConfirmationEmail = (body: any) => {
             <ul>
               <li>Nossa equipe analisará sua solicitação</li>
               <li>Entraremos em contato em até 24 horas via <strong>email</strong></li>
-              <li>Também entraremos em contato via <strong>WhatsApp</strong> no número ${body.phone}</li>
+              <li>Você também pode nos contatar diretamente pelo <strong>WhatsApp</strong></li>
               <li>Apresentaremos as melhores soluções para seu projeto</li>
             </ul>
 
             <div class="contact-info">
               <p><strong>📧 Email:</strong> doxxasistemas@gmail.com</p>
-              <p><strong>📱 WhatsApp:</strong> Disponível em breve</p>
+              <p><strong>📱 WhatsApp:</strong> (61) 99901-3354</p>
+              <a href="${whatsappLink}" class="whatsapp-button" style="color: white; text-decoration: none;">
+                💬 Falar no WhatsApp Agora
+              </a>
             </div>
 
             <p style="margin-top: 30px;">
@@ -266,12 +295,13 @@ ${body.message ? `Mensagem: ${body.message}` : ""}
 O que acontece agora?
 - Nossa equipe analisará sua solicitação
 - Entraremos em contato em até 24 horas via email
-- Também entraremos em contato via WhatsApp no número ${body.phone}
+- Você também pode nos contatar diretamente pelo WhatsApp: (61) 99901-3354
 - Apresentaremos as melhores soluções para seu projeto
 
 Contato:
 Email: doxxasistemas@gmail.com
-WhatsApp: Disponível em breve
+WhatsApp: (61) 99901-3354
+Link: ${whatsappLink}
 
 Aguardamos ansiosamente para ajudar a transformar seus resultados!
 
@@ -285,6 +315,13 @@ Equipe Doxa Sistemas
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { success: false, message: "Configuração de email não disponível" },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
     
     const adminEmail = createAdminEmail(body)
@@ -332,6 +369,8 @@ export async function POST(request: NextRequest) {
       console.warn("Email do cliente é o mesmo do admin ou não foi fornecido - email de confirmação não enviado")
     }
 
+    const whatsappLink = createWhatsAppLink(body)
+
     return NextResponse.json({ 
       success: true, 
       message: confirmationSent 
@@ -339,7 +378,8 @@ export async function POST(request: NextRequest) {
         : "Solicitação recebida com sucesso. Nota: Email de confirmação não pôde ser enviado devido a limitações do serviço de teste.",
       data: {
         admin: adminEmailResult.data,
-        confirmationSent
+        confirmationSent,
+        whatsappLink
       }
     })
   } catch (error) {

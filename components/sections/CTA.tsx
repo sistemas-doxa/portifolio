@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { SectionWrapper } from "@/components/SectionWrapper"
 import { motion } from "framer-motion"
+import { MessageCircle } from "lucide-react"
 
 export function CTA() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ export function CTA() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [whatsappLink, setWhatsappLink] = useState<string | null>(null)
+  const [clientName, setClientName] = useState<string>("")
 
   const formatPhone = (value: string) => {
     const numbers = value.replace(/\D/g, "")
@@ -82,11 +85,16 @@ export function CTA() {
       })
 
       if (response.ok) {
+        const result = await response.json()
+        setClientName(formData.name) // Salvar nome antes de limpar
         setSubmitted(true)
+        setWhatsappLink(result.data?.whatsappLink || null)
         setFormData({ name: "", email: "", phone: "", message: "" })
         setTimeout(() => {
           setSubmitted(false)
-        }, 5000)
+          setWhatsappLink(null)
+          setClientName("")
+        }, 10000)
       } else {
         const errorData = await response.json()
         alert("Erro ao enviar. Tente novamente ou entre em contato diretamente.")
@@ -124,9 +132,25 @@ export function CTA() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-white bg-white/20 backdrop-blur-sm rounded-lg p-4 mb-6"
+              className="text-white bg-white/20 backdrop-blur-sm rounded-lg p-6 mb-6"
             >
-              Obrigado, {formData.name || "cliente"}! Recebemos sua solicitação e entraremos em contato em breve via email e WhatsApp.
+              <p className="mb-4 font-semibold text-lg">
+              ✅ Solicitação enviada com sucesso!
+              </p>
+              <p className="mb-4">
+                Recebemos sua solicitação e entraremos em contato em breve via email e WhatsApp.
+              </p>
+              {whatsappLink && (
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Falar no WhatsApp Agora
+                </a>
+              )}
             </motion.div>
           )}
 

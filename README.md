@@ -1,28 +1,28 @@
-# Pasta de Imagens
+# 🚀 Doxa Sistemas - Landing Page
 
-## Logo da Doxa Sistemas
+Landing page profissional e moderna desenvolvida para a Doxa Sistemas.
 
-Coloque o arquivo da logo aqui com o nome: **`logo-doxa.png`**
+## 📋 Sobre
 
-### Especificações recomendadas:
-- **Formato**: PNG (com fundo transparente) ou SVG
-- **Tamanho**: Mínimo 200x200px (para alta qualidade)
-- **Nome do arquivo**: `logo-doxa.png` ou `logo-doxa.svg`
+Landing page de alta conversão desenvolvida para apresentar os serviços da Doxa Sistemas, capturar leads e facilitar o contato com potenciais clientes.
 
-### Onde colocar:
-```
-public/
-  images/
-    logo-doxa.png  ← Coloque a logo aqui
-```
+## 🛠️ Tecnologias
 
-O componente Logo irá usar automaticamente a imagem quando ela estiver disponível. Se não encontrar, mostrará um placeholder com a letra "D".
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Framer Motion
 
-## Outras Imagens
+## 🌐 Website
 
-Você também pode adicionar outras imagens aqui para usar no site:
-- Imagens de produtos/serviços
-- Screenshots de sistemas
-- Imagens de clientes/parceiros (quando tiver)
-- Qualquer outro asset visual
+Acesse: [doxasistemas.online](https://doxasistemas.online)
 
+## 📞 Contato
+
+- **Email**: doxxasistemas@gmail.com
+- **Website**: https://doxasistemas.online
+- **Instagram**: [@doxasistemas](https://www.instagram.com/doxasistemas/)
+
+---
+
+© 2025 Doxa Sistemas. Todos os direitos reservados.
