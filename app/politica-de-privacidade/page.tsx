@@ -21,7 +21,7 @@ export default function PoliticaPrivacidade() {
           <section>
             <h2 className="text-2xl font-bold text-[#0F1F3D] mt-8 mb-4">1. Introdução</h2>
             <p>
-              A Doxa Sistemas ("nós", "nosso" ou "empresa") respeita sua privacidade e está comprometida em proteger seus dados pessoais. Esta Política de Privacidade explica como coletamos, usamos, armazenamos e protegemos suas informações quando você utiliza nosso site.
+              A Doxa Sistemas (&quot;nós&quot;, &quot;nosso&quot; ou &quot;empresa&quot;) respeita sua privacidade e está comprometida em proteger seus dados pessoais. Esta Política de Privacidade explica como coletamos, usamos, armazenamos e protegemos suas informações quando você utiliza nosso site.
             </p>
           </section>
 
@@ -97,7 +97,7 @@ export default function PoliticaPrivacidade() {
           <section>
             <h2 className="text-2xl font-bold text-[#0F1F3D] mt-8 mb-4">9. Alterações nesta Política</h2>
             <p>
-              Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos sobre mudanças significativas publicando a nova política nesta página e atualizando a data de "Última atualização".
+              Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos sobre mudanças significativas publicando a nova política nesta página e atualizando a data de &quot;Última atualização&quot;.
             </p>
           </section>
 
