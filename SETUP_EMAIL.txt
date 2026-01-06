@@ -1,0 +1,24 @@
+===========================================
+CONFIGURAÇÃO DO EMAIL - PASSO A PASSO
+===========================================
+
+1. Crie um arquivo chamado ".env.local" na raiz do projeto (mesmo nível do package.json)
+
+2. Cole o seguinte conteúdo no arquivo:
+
+RESEND_API_KEY=re_MjBfnAjq_JHiXe2HhJEbJuPSNvNqogSSY
+CONTACT_EMAIL=doxxasistemas@gmail.com
+
+3. Instale o pacote resend executando no terminal:
+   npm install
+
+4. Reinicie o servidor de desenvolvimento:
+   npm run dev
+
+Pronto! O sistema de email está configurado e funcionando.
+
+===========================================
+NOTA: O arquivo .env.local não deve ser commitado no git.
+Ele já está no .gitignore para sua segurança.
+===========================================
+
