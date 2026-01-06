@@ -35,7 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# documentation (opcional - descomente se não quiser commitar)
-# *.md
-# !README.md
+# outras pastas
+portifolio/
 
