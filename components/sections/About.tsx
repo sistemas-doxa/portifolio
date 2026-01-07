@@ -25,7 +25,7 @@ const values = [
 
 export function About() {
   const sectionId = "sobre"
-  const sectionClassName = "py-20 bg-[#0F1F3D] relative overflow-hidden"
+  const sectionClassName = "py-12 sm:py-16 md:py-20 bg-[#0F1F3D] relative overflow-hidden"
   
   return (
     <SectionWrapper id={sectionId} className={sectionClassName}>
@@ -38,18 +38,18 @@ export function About() {
         />
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
             Sobre a Doxa Sistemas
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4">
             Transformando ideias em soluções tecnológicas de excelência
           </p>
         </motion.div>
@@ -59,26 +59,26 @@ export function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-4xl mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-10 sm:mb-12 md:mb-16"
         >
-          <p className="text-lg text-gray-200 leading-relaxed mb-6">
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 leading-relaxed mb-4 sm:mb-6">
             A Doxa Sistemas nasceu da paixão por criar soluções que realmente fazem a diferença.
             Somos uma empresa especializada no desenvolvimento de software empresarial, com foco
             em qualidade, inovação e resultados mensuráveis.
           </p>
-          <p className="text-lg text-gray-200 leading-relaxed mb-6">
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 leading-relaxed mb-4 sm:mb-6">
             Nossa missão é simplificar processos complexos, automatizar tarefas repetitivas e
             fornecer insights valiosos que impulsionam o crescimento dos nossos clientes. Acreditamos
             que a tecnologia deve ser um facilitador, não um obstáculo.
           </p>
-          <p className="text-lg text-gray-200 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-gray-200 leading-relaxed">
             Com anos de experiência no mercado e uma equipe altamente qualificada, entregamos
             sistemas robustos, seguros e escaláveis que se adaptam às necessidades específicas
             de cada negócio.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {values.map((value, index) => {
             const Icon = value.icon
             return (
@@ -90,13 +90,13 @@ export function About() {
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="text-center"
               >
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#C5A059]/20 mb-6">
-                  <Icon className="h-10 w-10 text-[#C5A059]" />
+                <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#C5A059]/20 mb-4 sm:mb-6">
+                  <Icon className="h-8 w-8 sm:h-10 sm:w-10 text-[#C5A059]" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                   {value.title}
                 </h3>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
                   {value.description}
                 </p>
               </motion.div>

@@ -38,25 +38,25 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#0F1F3D] text-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <Logo className="mb-4" variant="dark" />
-            <p className="text-gray-300 text-sm leading-relaxed">
+    <footer className="bg-[#0F1F3D] text-white py-8 sm:py-10 md:py-12">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
+          <div className="sm:col-span-2 md:col-span-1">
+            <Logo className="mb-3 sm:mb-4" variant="dark" />
+            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
               Transformando negócios através de soluções tecnológicas inovadoras
               e confiáveis.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Links Rápidos</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Links Rápidos</h3>
+            <ul className="space-y-1.5 sm:space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-300 hover:text-[#C5A059] transition-colors text-sm"
+                    className="text-gray-300 hover:text-[#C5A059] transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
                   </Link>
@@ -66,13 +66,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Legal</h3>
+            <ul className="space-y-1.5 sm:space-y-2">
               {legalLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-300 hover:text-[#C5A059] transition-colors text-sm"
+                    className="text-gray-300 hover:text-[#C5A059] transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
                   </Link>
@@ -81,9 +81,9 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="font-semibold mb-4">Redes Sociais</h3>
-            <div className="flex gap-4">
+          <div className="sm:col-span-2 md:col-span-1">
+            <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Redes Sociais</h3>
+            <div className="flex gap-3 sm:gap-4">
               {socialLinks.map((social) => {
                 const Icon = social.icon
                 const isWhatsApp = social.label === "WhatsApp"
@@ -94,11 +94,11 @@ export function Footer() {
                     target={social.href.startsWith("http") ? "_blank" : undefined}
                     rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     aria-label={social.label}
-                    className={`w-10 h-10 rounded-full bg-white/10 transition-colors flex items-center justify-center ${
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 transition-colors flex items-center justify-center ${
                       isWhatsApp ? "hover:bg-[#25D366]" : "hover:bg-[#C5A059]"
                     }`}
                   >
-                    <Icon className="h-5 w-5" />
+                    <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   </a>
                 )
               })}
@@ -106,8 +106,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 text-center">
-          <p className="text-gray-300 text-sm">
+        <div className="border-t border-white/10 pt-6 sm:pt-8 text-center">
+          <p className="text-gray-300 text-xs sm:text-sm">
             © 2025 Doxa Sistemas. Todos os direitos reservados.
           </p>
         </div>

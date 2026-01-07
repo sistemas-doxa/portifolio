@@ -14,6 +14,8 @@ export function CTA() {
     phone: "",
     message: ""
   })
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [whatsappLink, setWhatsappLink] = useState<string | null>(null)
@@ -47,22 +49,83 @@ export function CTA() {
     })
   }
 
+  const validateField = (name: string, value: string) => {
+    let error = ""
+    
+    switch (name) {
+      case "name":
+        if (!value.trim()) {
+          error = "Nome é obrigatório"
+        } else if (value.trim().length < 2) {
+          error = "Nome deve ter pelo menos 2 caracteres"
+        }
+        break
+      case "email":
+        if (!value.trim()) {
+          error = "E-mail é obrigatório"
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          error = "E-mail inválido"
+        }
+        break
+      case "phone":
+        const numbers = value.replace(/\D/g, "")
+        if (!value.trim()) {
+          error = "Telefone é obrigatório"
+        } else if (numbers.length < 10) {
+          error = "Telefone inválido"
+        }
+        break
+    }
+    
+    return error
+  }
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const fieldName = e.target.name
+    setTouched({ ...touched, [fieldName]: true })
+    
+    const error = validateField(fieldName, e.target.value)
+    setErrors({ ...errors, [fieldName]: error })
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.target.name === "phone") {
+    const fieldName = e.target.name
+    
+    if (fieldName === "phone") {
       handlePhoneChange(e as React.ChangeEvent<HTMLInputElement>)
     } else {
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value
+        [fieldName]: e.target.value
       })
+    }
+
+    if (touched[fieldName]) {
+      const error = validateField(fieldName, e.target.value)
+      setErrors({ ...errors, [fieldName]: error })
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!formData.email || !formData.name || !formData.phone) {
-      alert("Por favor, preencha todos os campos obrigatórios.")
+    const newTouched: Record<string, boolean> = {}
+    const newErrors: Record<string, string> = {}
+    
+    Object.keys(formData).forEach((key) => {
+      if (key !== "message") {
+        newTouched[key] = true
+        const error = validateField(key, formData[key as keyof typeof formData])
+        if (error) {
+          newErrors[key] = error
+        }
+      }
+    })
+    
+    setTouched(newTouched)
+    setErrors(newErrors)
+    
+    if (Object.keys(newErrors).length > 0) {
       return
     }
 
@@ -107,13 +170,13 @@ export function CTA() {
   }
 
   const sectionId = "contato"
-  const sectionClassName = "py-20 relative overflow-hidden"
+  const sectionClassName = "py-12 sm:py-16 md:py-20 relative overflow-hidden"
   
   return (
     <SectionWrapper id={sectionId} className={sectionClassName}>
       <div className="absolute inset-0 bg-gradient-to-br from-[#C5A059] via-[#C5A059]/90 to-[#0F1F3D]"></div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -121,10 +184,10 @@ export function CTA() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto text-center"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
             Pronto para elevar o nível da sua tecnologia?
           </h2>
-          <p className="text-xl text-white/90 mb-12 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 sm:mb-10 md:mb-12 leading-relaxed px-4">
             Agende uma demonstração gratuita e descubra como a Doxa pode transformar seus resultados.
           </p>
 
@@ -132,12 +195,12 @@ export function CTA() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-white bg-white/20 backdrop-blur-sm rounded-lg p-6 mb-6"
+              className="text-white bg-white/20 backdrop-blur-sm rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 mx-4 sm:mx-0"
             >
-              <p className="mb-4 font-semibold text-lg">
+              <p className="mb-3 sm:mb-4 font-semibold text-base sm:text-lg">
               ✅ Solicitação enviada com sucesso!
               </p>
-              <p className="mb-4">
+              <p className="mb-3 sm:mb-4 text-sm sm:text-base">
                 Recebemos sua solicitação e entraremos em contato em breve via email e WhatsApp.
               </p>
               {whatsappLink && (
@@ -145,60 +208,87 @@ export function CTA() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
                 >
-                  <MessageCircle className="h-5 w-5" />
+                  <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                   Falar no WhatsApp Agora
                 </a>
               )}
             </motion.div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div>
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Seu nome *"
+                  value={formData.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`bg-white/95 text-[#0F1F3D] placeholder:text-gray-500 ${
+                    touched.name && errors.name ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
+                  required
+                />
+                {touched.name && errors.name && (
+                  <p className="mt-1 text-xs text-red-500">{errors.name}</p>
+                )}
+              </div>
+              <div>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Seu melhor e-mail *"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`bg-white/95 text-[#0F1F3D] placeholder:text-gray-500 ${
+                    touched.email && errors.email ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
+                  required
+                />
+                {touched.email && errors.email && (
+                  <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+                )}
+              </div>
+            </div>
+            <div>
               <Input
-                type="text"
-                name="name"
-                placeholder="Seu nome *"
-                value={formData.name}
-                onChange={handleChange}
-                className="bg-white/95 text-[#0F1F3D] placeholder:text-gray-500"
+                type="tel"
+                name="phone"
+                placeholder="Telefone * (00) 00000-0000"
+                value={formData.phone}
+                onChange={handlePhoneChange}
+                onBlur={handleBlur}
+                className={`bg-white/95 text-[#0F1F3D] placeholder:text-gray-500 ${
+                  touched.phone && errors.phone ? "border-red-500 focus-visible:ring-red-500" : ""
+                }`}
                 required
+                maxLength={15}
               />
-              <Input
-                type="email"
-                name="email"
-                placeholder="Seu melhor e-mail *"
-                value={formData.email}
+              {touched.phone && errors.phone && (
+                <p className="mt-1 text-xs text-red-500">{errors.phone}</p>
+              )}
+            </div>
+            <div>
+              <textarea
+                name="message"
+                placeholder="Conte-nos sobre seu projeto (opcional)"
+                value={formData.message}
                 onChange={handleChange}
-                className="bg-white/95 text-[#0F1F3D] placeholder:text-gray-500"
-                required
+                onBlur={handleBlur}
+                rows={4}
+                className="w-full rounded-md border border-input bg-white/95 px-3 py-2 text-sm text-[#0F1F3D] placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               />
             </div>
-            <Input
-              type="tel"
-              name="phone"
-              placeholder="Telefone * (00) 00000-0000"
-              value={formData.phone}
-              onChange={handlePhoneChange}
-              className="bg-white/95 text-[#0F1F3D] placeholder:text-gray-500"
-              required
-              maxLength={15}
-            />
-            <textarea
-              name="message"
-              placeholder="Conte-nos sobre seu projeto (opcional)"
-              value={formData.message}
-              onChange={handleChange}
-              rows={4}
-              className="w-full rounded-md border border-input bg-white/95 px-3 py-2 text-sm text-[#0F1F3D] placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            />
             <Button
               type="submit"
               disabled={isLoading}
               variant="default"
               size="lg"
-              className="bg-white text-[#0F1F3D] hover:bg-white/90 text-lg px-8 py-6 disabled:opacity-50 w-full md:w-auto"
+              className="bg-white text-[#0F1F3D] hover:bg-white/90 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 disabled:opacity-50 w-full sm:w-auto"
             >
               {isLoading ? "Enviando..." : "Solicitar Orçamento Agora"}
             </Button>

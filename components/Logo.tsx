@@ -14,8 +14,8 @@ export function Logo({ className = "", variant = "light" }: LogoProps) {
   
   return (
     <div className={`relative ${className}`}>
-      <div className="flex items-center gap-3">
-        <div className="relative w-14 h-14">
+      <div className="flex items-center gap-2 sm:gap-3">
+        <div className="relative w-10 h-10 sm:w-12 sm:h-14 md:w-14 md:h-14">
           {!imageError ? (
             <Image
               src="/images/logo-doxa.png"
@@ -26,14 +26,14 @@ export function Logo({ className = "", variant = "light" }: LogoProps) {
               onError={() => setImageError(true)}
             />
           ) : (
-            <div className="w-14 h-14 bg-gradient-to-br from-[#0F1F3D] to-[#C5A059] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-2xl">D</span>
+            <div className="w-full h-full bg-gradient-to-br from-[#0F1F3D] to-[#C5A059] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-lg sm:text-xl md:text-2xl">D</span>
             </div>
           )}
         </div>
         <div className="flex flex-col">
-          <span className={`${textColor} font-bold text-xl leading-tight`}>DOXA</span>
-          <span className={`${textColor} text-sm leading-tight`}>SISTEMAS</span>
+          <span className={`${textColor} font-bold text-base sm:text-lg md:text-xl leading-tight`}>DOXA</span>
+          <span className={`${textColor} text-xs sm:text-sm leading-tight`}>SISTEMAS</span>
         </div>
       </div>
     </div>
