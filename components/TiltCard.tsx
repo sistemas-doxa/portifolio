@@ -56,10 +56,10 @@ export function TiltCard({ children, className = "" }: TiltCardProps) {
       className={className}
     >
       <motion.div
-        style={{
+        animate={{
           transform: isHovered ? "translateZ(20px)" : "translateZ(0px)",
-          transition: { duration: 0.3 },
         }}
+        transition={{ duration: 0.3 }}
       >
         {children}
       </motion.div>
