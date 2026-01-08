@@ -5,7 +5,6 @@ import { Zap, Shield, HeadphonesIcon } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { ProgressBar } from "@/components/ProgressBar"
-import { ParallaxImage } from "@/components/ParallaxImage"
 
 const features = [
   {
@@ -106,12 +105,15 @@ export function Features() {
               foque no que realmente importa: fazer seu negócio crescer.
             </p>
           </div>
-          <div className="order-1 md:order-2 relative h-48 sm:h-64 md:h-80 rounded-xl sm:rounded-2xl overflow-hidden">
-            <ParallaxImage
+          <div className="order-1 md:order-2 relative w-full aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden">
+            <Image
               src="/images/features.png"
               alt="Tecnologia e Inovação"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0F1F3D]/40 to-[#4B9CD3]/40 z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0F1F3D]/40 to-[#4B9CD3]/40 z-10 pointer-events-none"></div>
           </div>
         </motion.div>
       </div>

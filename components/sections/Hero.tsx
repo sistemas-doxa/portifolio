@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { ParticlesBackground } from "@/components/ParticlesBackground"
-import { ParallaxImage } from "@/components/ParallaxImage"
 
 export function Hero() {
   const sectionClassName = "pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 min-h-[85vh] sm:min-h-screen flex items-center relative overflow-hidden"
@@ -77,12 +76,16 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative"
           >
-            <div className="relative h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden">
-              <ParallaxImage
+            <div className="relative w-full aspect-[5/3] sm:aspect-[4/3] md:aspect-[5/3] rounded-xl sm:rounded-2xl overflow-hidden">
+              <Image
                 src="/images/hero-image.png"
                 alt="Tecnologia e Inovação"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#0F1F3D]/20 to-[#C5A059]/20 z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0F1F3D]/20 to-[#C5A059]/20 z-10 pointer-events-none"></div>
             </div>
           </motion.div>
         </div>
