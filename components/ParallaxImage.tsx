@@ -21,16 +21,18 @@ export function ParallaxImage({ src, alt, className = "" }: ParallaxImageProps) 
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 1, 0.3])
 
   return (
-    <div ref={ref} className={`relative overflow-hidden ${className}`}>
+    <div ref={ref} className={`relative w-full h-full overflow-hidden ${className}`}>
       <motion.div
         style={{ y, opacity }}
-        className="relative w-full h-full"
+        className="absolute inset-0"
       >
         <Image
           src={src}
           alt={alt}
           fill
-          className="object-cover"
+          className="object-cover object-center"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={false}
         />
       </motion.div>
     </div>

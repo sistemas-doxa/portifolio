@@ -81,7 +81,6 @@ export function Hero() {
               <ParallaxImage
                 src="/images/hero-image.png"
                 alt="Tecnologia e Inovação"
-                className="h-full w-full"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-[#0F1F3D]/20 to-[#C5A059]/20 z-10"></div>
             </div>
